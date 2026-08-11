@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Unit Converter // unit-converter.slippylabs.com</title>
+<meta name="description" content="Convert length, weight, temperature, volume, and speed instantly. Runs entirely in your browser.">
+<link rel="icon" href="data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2064%2064%22%3E%3Ccircle%20cx%3D%2232%22%20cy%3D%2234%22%20r%3D%2222%22%20fill%3D%22%231c8a52%22%20stroke%3D%22%2339ff8f%22%20stroke-width%3D%222%22%2F%3E%3Ccircle%20cx%3D%2220%22%20cy%3D%2216%22%20r%3D%228%22%20fill%3D%22%231c8a52%22%20stroke%3D%22%2339ff8f%22%20stroke-width%3D%222%22%2F%3E%3Ccircle%20cx%3D%2244%22%20cy%3D%2216%22%20r%3D%228%22%20fill%3D%22%231c8a52%22%20stroke%3D%22%2339ff8f%22%20stroke-width%3D%222%22%2F%3E%3C%2Fsvg%3E">
+<meta name="theme-color" content="#050b10">
+<link rel="stylesheet" href="style.css?v=5">
+</head>
+<body>
+
+<div class="starfield"></div>
+<div class="scanlines"></div>
+
+<main class="page-wrap">
+  <div class="hud-panel wide">
+    <div class="corner tl"></div>
+    <div class="corner tr"></div>
+    <div class="corner bl"></div>
+    <div class="corner br"></div>
+
+    <div class="callsign-row">
+      <div class="toad-avatar-wrap">
+        <svg class="toad-avatar" width="46" height="46" viewBox="0 0 64 64">
+          <circle cx="32" cy="34" r="22" fill="#1c8a52" stroke="#39ff8f" stroke-width="2"/>
+          <circle cx="20" cy="16" r="8" fill="#1c8a52" stroke="#39ff8f" stroke-width="2"/>
+          <circle cx="44" cy="16" r="8" fill="#1c8a52" stroke="#39ff8f" stroke-width="2"/>
+          <circle cx="20" cy="16" r="3.5" fill="#050b10"/>
+          <circle cx="44" cy="16" r="3.5" fill="#050b10"/>
+          <ellipse cx="24" cy="32" rx="4.5" ry="5.5" fill="#050b10"/>
+          <ellipse cx="40" cy="32" rx="4.5" ry="5.5" fill="#050b10"/>
+          <circle cx="24" cy="30" r="1.4" fill="#39ff8f"/>
+          <circle cx="40" cy="30" r="1.4" fill="#39ff8f"/>
+          <path d="M22 42 Q32 48 42 42" stroke="#050b10" stroke-width="2" fill="none" stroke-linecap="round"/>
+        </svg>
+        <div class="lock-reticle"></div>
+      </div>
+      <span class="callsign">Workshop Division // Tool</span>
+      <div class="nav-links">
+        <a href="https://projects.slippylabs.com/" class="logout-link">← Archive</a>
+      </div>
+    </div>
+
+    <h1>UNIT CONVERTER</h1>
+    <p class="subtitle">Pick a category, enter a value, and the other side updates live. Swap flips direction instantly.</p>
+
+    <div class="tool-field-row">
+      <label class="tool-field-label" for="category-select">Category</label>
+      <select class="tool-select" id="category-select"></select>
+    </div>
+
+    <div class="tool-dim-row" style="align-items:end;">
+      <div class="tool-field-row">
+        <label class="tool-field-label" for="from-value">From</label>
+        <input class="tool-number-input" id="from-value" type="number" value="1" inputmode="decimal">
+      </div>
+      <div class="tool-field-row">
+        <label class="tool-field-label" for="from-unit">Unit</label>
+        <select class="tool-select" id="from-unit"></select>
+      </div>
+    </div>
+
+    <div class="tool-controls">
+      <button class="tool-btn ghost" id="swap-btn">⇅ Swap</button>
+    </div>
+
+    <div class="tool-dim-row" style="align-items:end;">
+      <div class="tool-field-row">
+        <label class="tool-field-label" for="to-value">To</label>
+        <input class="tool-number-input" id="to-value" type="text" readonly>
+      </div>
+      <div class="tool-field-row">
+        <label class="tool-field-label" for="to-unit">Unit</label>
+        <select class="tool-select" id="to-unit"></select>
+      </div>
+    </div>
+
+    <div class="comm-window">
+      <div class="comm-portrait">
+        <svg width="36" height="36" viewBox="0 0 64 64">
+          <circle cx="32" cy="34" r="22" fill="#1c8a52" stroke="#39ff8f" stroke-width="2"/>
+          <circle cx="20" cy="16" r="8" fill="#1c8a52" stroke="#39ff8f" stroke-width="2"/>
+          <circle cx="44" cy="16" r="8" fill="#1c8a52" stroke="#39ff8f" stroke-width="2"/>
+          <circle cx="20" cy="16" r="3.5" fill="#050b10"/>
+          <circle cx="44" cy="16" r="3.5" fill="#050b10"/>
+          <ellipse cx="24" cy="32" rx="4.5" ry="5.5" fill="#050b10"/>
+          <ellipse cx="40" cy="32" rx="4.5" ry="5.5" fill="#050b10"/>
+          <circle cx="24" cy="30" r="1.4" fill="#39ff8f"/>
+          <circle cx="40" cy="30" r="1.4" fill="#39ff8f"/>
+          <path d="M22 42 Q32 48 42 42" stroke="#050b10" stroke-width="2" fill="none" stroke-linecap="round"/>
+        </svg>
+      </div>
+      <div class="comm-body">
+        <div class="comm-label"><span class="dot"></span> Incoming Transmission &mdash; Slippy</div>
+        <p>"Every conversion happens right here, no server round-trip needed."</p>
+      </div>
+    </div>
+
+    <a href="https://projects.slippylabs.com/" class="hud-btn">← Back to Archive</a>
+  </div>
+</main>
+
+<script>
+const UNITS = {
+  length: {
+    label: 'Length',
+    units: { mm: 0.001, cm: 0.01, m: 1, km: 1000, in: 0.0254, ft: 0.3048, yd: 0.9144, mi: 1609.344 },
+  },
+  weight: {
+    label: 'Weight',
+    units: { mg: 0.001, g: 1, kg: 1000, oz: 28.3495, lb: 453.592, st: 6350.29 },
+  },
+  temperature: {
+    label: 'Temperature',
+    units: { C: 'C', F: 'F', K: 'K' },
+  },
+  volume: {
+    label: 'Volume',
+    units: { ml: 0.001, l: 1, tsp: 0.00492892, tbsp: 0.0147868, floz: 0.0295735, cup: 0.24, pt: 0.473176, qt: 0.946353, gal: 3.78541 },
+  },
+  speed: {
+    label: 'Speed',
+    units: { 'm/s': 1, 'km/h': 0.277778, mph: 0.44704, knot: 0.514444, 'ft/s': 0.3048 },
+  },
+};
+
+const categorySelect = document.getElementById('category-select');
+const fromUnit = document.getElementById('from-unit');
+const toUnit = document.getElementById('to-unit');
+const fromValue = document.getElementById('from-value');
+const toValue = document.getElementById('to-value');
+
+Object.keys(UNITS).forEach(key => {
+  const opt = document.createElement('option');
+  opt.value = key;
+  opt.textContent = UNITS[key].label;
+  categorySelect.appendChild(opt);
+});
+
+function populateUnitSelects() {
+  const cat = UNITS[categorySelect.value];
+  const keys = Object.keys(cat.units);
+  [fromUnit, toUnit].forEach(select => {
+    select.innerHTML = '';
+    keys.forEach(k => {
+      const opt = document.createElement('option');
+      opt.value = k;
+      opt.textContent = k;
+      select.appendChild(opt);
+    });
+  });
+  fromUnit.value = keys[0];
+  toUnit.value = keys[1] || keys[0];
+}
+
+function tempToCelsius(v, unit) {
+  if (unit === 'C') return v;
+  if (unit === 'F') return (v - 32) * 5 / 9;
+  if (unit === 'K') return v - 273.15;
+}
+function celsiusToTemp(c, unit) {
+  if (unit === 'C') return c;
+  if (unit === 'F') return c * 9 / 5 + 32;
+  if (unit === 'K') return c + 273.15;
+}
+
+function formatNumber(n) {
+  if (!isFinite(n)) return '';
+  const rounded = Math.round(n * 1e6) / 1e6;
+  return String(rounded);
+}
+
+function convert() {
+  const cat = categorySelect.value;
+  const raw = parseFloat(fromValue.value);
+  if (isNaN(raw)) { toValue.value = ''; return; }
+
+  if (cat === 'temperature') {
+    const celsius = tempToCelsius(raw, fromUnit.value);
+    toValue.value = formatNumber(celsiusToTemp(celsius, toUnit.value));
+    return;
+  }
+
+  const factors = UNITS[cat].units;
+  const base = raw * factors[fromUnit.value];
+  toValue.value = formatNumber(base / factors[toUnit.value]);
+}
+
+categorySelect.addEventListener('change', () => { populateUnitSelects(); convert(); });
+fromUnit.addEventListener('change', convert);
+toUnit.addEventListener('change', convert);
+fromValue.addEventListener('input', convert);
+
+document.getElementById('swap-btn').addEventListener('click', () => {
+  const tmp = fromUnit.value;
+  fromUnit.value = toUnit.value;
+  toUnit.value = tmp;
+  const val = parseFloat(toValue.value);
+  fromValue.value = isNaN(val) ? fromValue.value : val;
+  convert();
+});
+
+populateUnitSelects();
+convert();
+</script>
+</body>
+</html>
